@@ -161,17 +161,44 @@
   <div class="section" id="welcome-to-netapp-jenkins-plugin-s-documentation">
 <h1>Welcome to NetApp Jenkins Plugin’s documentation!<a class="headerlink" href="#welcome-to-netapp-jenkins-plugin-s-documentation" title="Permalink to this headline">¶</a></h1>
 <p>The NetApp-Jenkins integration is an end-to-end framework from creating code repository until zipping the successful builds in the artifactory location. All these processes run as Docker-containers and use persistent NetApp storage with NetApp Docker volume plugin (nDVP).</p>
+<dl class="docutils">
+<dt>The advantage of running CI process on NetApp for Business or Asset owner are –</dt>
+<dd><ol class="first last arabic">
+<li><p class="first">Improve Developer productivity</p>
+<blockquote>
+<div><ol class="loweralpha simple">
+<li>NetApp FlexClones allows to cut down the user workspace provisioning from hours and days to few seconds.</li>
+<li>Each user workspace is pre-packaged with the source code and the dependencies like libraries, tools, compilers and config files for developers start working quickly. There are no long wait times for developers to prepare their workspaces.</li>
+</ol>
+</div></blockquote>
+</li>
+<li><p class="first">Reduce build time</p>
+<blockquote>
+<div><ol class="loweralpha simple">
+<li>NetApp Snapshots for the CI data volumes allows developers to run incremental builds over full builds. Full builds are time consuming.</li>
+<li>Incremental builds allow developers to test the changes quickly in their workspaces and provides consistency to the builds with reduced build times.</li>
+</ol>
+</div></blockquote>
+</li>
+<li><p class="first">Reduce infrastructure costs</p>
+<blockquote>
+<div><ol class="loweralpha simple">
+<li>NetApp data volumes also known as FlexVols, Snapshots and FlexClones are thin provisioned. This allows to provision more build workloads with less storage footprint and optimize compute and network resources for parallel builds. Thus providing an improved Return of Investment (ROI) by doing “more with less” in the entire build farm.</li>
+<li>Data Compaction and De-duplication for the source code repositories and the software builds during the CI process on NetApp provides a high degree of storage space efficiency. Data compression of build artifacts in the binary repository lso provides space savings.</li>
+</ol>
+</div></blockquote>
+</li>
+</ol>
+</dd>
+</dl>
 </div>
 <div class="section" id="contents">
 <h1>Contents<a class="headerlink" href="#contents" title="Permalink to this headline">¶</a></h1>
 <div class="toctree-wrapper compound">
 </div>
 <ul class="simple">
-<li><a class="reference internal" href="genindex.html"><span class="std std-ref">Index</span></a></li>
-<li><a class="reference internal" href="py-modindex.html"><span class="std std-ref">Module Index</span></a></li>
 <li><a class="reference internal" href="prerequisites.html#pre"><span class="std std-ref">Pre-Requisites</span></a></li>
 <li><a class="reference internal" href="prerequisites.html#post"><span class="std std-ref">Post-Configration</span></a></li>
-<li><a class="reference internal" href="prerequisites.html#pre"><span class="std std-ref">Pre-Requisites</span></a></li>
 <li><dl class="first docutils">
 <dt><a class="reference internal" href="prerequisites.html#workflow"><span class="std std-ref">Workflow</span></a></dt>
 <dd><ul class="first last">
@@ -184,14 +211,11 @@
 </dd>
 </dl>
 </li>
+<li><a class="reference internal" href="support.html#support"><span class="std std-ref">Support</span></a></li>
 </ul>
 <div class="section" id="faq">
 <h2>FAQ<a class="headerlink" href="#faq" title="Permalink to this headline">¶</a></h2>
 <div class="toctree-wrapper compound">
-</div>
-<div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">Notes can be added like this.</p>
 </div>
 </div>
 </div>

@@ -6,15 +6,7 @@
 .. toctree::
    :titlesonly:
    :hidden:
-   
-   
-Contents
-==================
 
-* :ref:`genindex`
-* :ref:`modindex`
-* :ref:`search`   
-   
    
 .. _pre:
    
@@ -52,15 +44,16 @@ Pre-Requisites
 
 Post-Configration
 =================================================
-    1.	**Adding ONTAP Storage system in NetApp Service Level Manager**
-
-		1.1) Open a web browser and enter the URL “https://xx.xx.xx.xx:8443/admin/” where xx.xx.xx.xx is the IP address of the host machine where NetApp SLM is installed.
+	
+    1.  **Adding ONTAP Storage system in NetApp Service Level Manager**
+	
+	    1.1) Open a web browser and enter the URL “https://xx.xx.xx.xx:8443/admin/” where xx.xx.xx.xx is the IP address of the host machine where NetApp SLM is installed.
 		
-		1.2) Enter your NSLM username and password when prompted.
+	    1.2) Enter your NSLM username and password when prompted.
 		
-		1.3) Click on +Add and enter the details of your ONTAP Cluster.
+	    1.3) Click on +Add and enter the details of your ONTAP Cluster.
 		
-		1.4) Verify that the instance of ONTAP is added as shown in the screenshot.
+	    1.4) Verify that the instance of ONTAP is added as shown in the screenshot.
 		
 	    .. figure:: images/addslm.png
 		    :scale: 100 %
@@ -261,7 +254,7 @@ Post-Configration
 			
 Predefined Pipelines and Jobs
 =================================================
-	1. This solution has following 4  prefdefined pipelines:
+	1. This solution has following 4  prefdefined pipelines and PreConfigured Jobs:
 	
 	.. |br| raw:: html
 
@@ -295,8 +288,94 @@ Predefined Pipelines and Jobs
 	|                           |  3)Create a Docker image of Build environment and push it to a repo | Create_Docker_Image                          | 
 	+---------------------------+---------------------------------------------------------------------+----------------------------------------------+
 		
+	2. Preconfigured Jobs
 	
+	+---------------------------+---------------------------------------------------------------------+----------------------------------------------+
+	| Job Name                  | Tasks                                                               | Scripts Included                             |
+	+===========================+=====================================================================+==============================================+
+	| JFrog_OSS_Repo            |  1)Create 3 NetApp Volumes |br|                                     | scmconfig2.py                                |
+	|                           |  2)Spin up a GitLab Container with its Logs,Data and configuration  |                                              |
+	|                           |  stored on NetApp Volumes                                           |                                              |
+	|                           |                                                                     |                                              |
+	|                           |                                                                     |                                              | 
+	|                           |                                                                     |                                              | 
+	|                           |                                                                     |                                              |
+	+---------------------------+---------------------------------------------------------------------+----------------------------------------------+
+	| JFrog_2017_1              |  1)Create a NetApp Volume     |br|                                  | CI_dev_bracbh_create2.py  |br|               |
+	|                           |  2)Create a Docker Service                   |br|                   | Jenkins_slave_create2.py |br|                |
+	|                           |  3)Mount a NetApp Volume inside the Docker Service                  |                                              | 
+	|                           |                                                                     |                                              |
+	|                           |                                                                     |                                              |
+	|                           |                                                                     |                                              |         
+	|                           |                                                                     |                                              |
+	+---------------------------+---------------------------------------------------------------------+----------------------------------------------+
+	| UserWorkspace             |  1)Create a FlexClone from a Build Snapshot    |br|                 | userworkspace_creation1.py  |br|             |
+	|                           |  2)Create a Docker Service                     |br|                 | Jenkins_slave_create2.py |br|                |
+   	|                           |  3)Mount NetApp Clone inside the Docker Service                     |                                              |                   
+	+---------------------------+---------------------------------------------------------------------+----------------------------------------------+
+	| Build_Artifacts_JFrog2017 |  1)Create a NetApp volume to store zip archives |br|                | Volume_create.py           |br|              |
+	|                           |  2)Zip a Build Environment and push it to artifactory  |br|         | Build_Artifact_create.py   |br|              |
+	|                           |                                                                     |                                              | 
+	+---------------------------+---------------------------------------------------------------------+----------------------------------------------+
+	| ZipandCopy                |  This jobs should always run after the Artifacts volume is created  | build_artifact_exec.py |br|                  |
+	|                           |  and should always run on a Jenkins Slave  |br|                     | clone_purge.py          |br|                 |
+	|                           |                                                                     |                                              | 
+	|                           |  1)Zip the contents of a clone volume |br|                          |                                              |
+	|                           |  2)Move this zip to Artifact Volume   |br|                          |                                              |
+	|                           |  3)Push the zip to Artifactory                                      |                                              |         
+	|                           |  4)Delete the clone                                                 |                                              |
+	+---------------------------+---------------------------------------------------------------------+----------------------------------------------+
+	| CreateDockerImage         |  This job should always run on Jenkins Slave     |br|               | dockerimagecreate.py                         |
+	|                           |                                                                     |                                              |
+	|                           |  1)Get container id from Docker Service Name    |br|                |                                              |
+	|                           |  2)Commit the container                    |br|                     |                                              |
+	|                           |  3)Build Docker Image of the container     |br|                     |                                              | 
+	|                           |  4)Push the image to a private repo        |br|                     |                                              | 
+	|                           |                                                                     |                                              |
+	+---------------------------+---------------------------------------------------------------------+----------------------------------------------+
+	| CreateBuildCheckpoints    |  1)Create a NetApp Snapshot   |br|                                  | snapshot_create_write.py  |br|               |
+	|                           |  2)Tag build name and number to snapshot name |br|                  |                                              |
+	|                           |  3)Write snapshot name to properties file so that extensible choice |                                              | 
+	|                           |  parameter plugin can read and display it in a dropdown menu        |                                              |
+	|                           |                                                                     |                                              |
+	|                           |                                                                     |                                              |         
+	|                           |                                                                     |                                              |
+	+---------------------------+---------------------------------------------------------------------+----------------------------------------------+
+	| SCMCheckpoints            |  This job is supposed to run by a Git WebHook for successful push   | scmcheckpoint_create.py                      |
+	|                           |                                                                     |                                              |
+	|                           |  1)Tag a SHA number to name of a Snapshot |br|                      |                                              |
+	|                           |  2)Create a netapp snapshot               |br|                      |                                              |
+	|                           |                                                                     |                                              | 
+	|                           |                                                                     |                                              | 
+	|                           |                                                                     |                                              |
+	+---------------------------+---------------------------------------------------------------------+----------------------------------------------+
+	| List_Build_Checkpoints    |  1)Display Snapshots for CI Build Volume |br|                       | snap_show.py              |br|               |
+	|                           |                                                                     |                                              |
+	|                           |                                                                     |                                              | 
+	|                           |                                                                     |                                              |
+	|                           |                                                                     |                                              |
+	|                           |                                                                     |                                              |         
+	|                           |                                                                     |                                              |
+	+---------------------------+---------------------------------------------------------------------+----------------------------------------------+
+	| List_SCM_Checkpoints      |  1)Display Snapshots for SCM Volume                                 | snap_show.py                                 |
+	|                           |                                                                     |                                              |
+	|                           |                                                                     |                                              |
+	|                           |                                                                     |                                              |
+	|                           |                                                                     |                                              | 
+	|                           |                                                                     |                                              | 
+	|                           |                                                                     |                                              |
+	+---------------------------+---------------------------------------------------------------------+----------------------------------------------+
+	| Purge Policy              |  This job is supposed to run on a cron schedule                     | purge.py                                     |
+	|                           |                                                                     |                                              |
+	|                           |  1) Find Free and Busy Snapshots |br|                               |                                              | 
+	|                           |  2) Delete Free snapshots above a predefined number |br|            |                                              |
+	|                           |  3) If Number of busy snapshots exceed a certain predefined value   |                                              |
+	|                           |     display and alert                                               |                                              |         
+	|                           |                                                                     |                                              |
+	+---------------------------+---------------------------------------------------------------------+----------------------------------------------+
 
+	
+	
 .. _workflow:	
 
 Workflow	
