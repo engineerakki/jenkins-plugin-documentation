@@ -1,0 +1,1037 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Contents &mdash; NetApp Jenkins Plugin 2.0 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="genindex.html"/>
+        <link rel="search" title="Search" href="search.html"/>
+    <link rel="top" title="NetApp Jenkins Plugin 2.0 documentation" href="index.html"/> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="index.html" class="icon icon-home"> NetApp Jenkins Plugin
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                2.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <!-- Local TOC -->
+              <div class="local-toc"><ul>
+<li><a class="reference internal" href="#">Contents</a></li>
+<li><a class="reference internal" href="#pre-requisites">Pre-Requisites</a></li>
+<li><a class="reference internal" href="#post-configration">Post-Configration</a></li>
+<li><a class="reference internal" href="#predefined-pipelines-and-jobs">Predefined Pipelines and Jobs</a></li>
+<li><a class="reference internal" href="#workflow">Workflow</a><ul>
+<li><a class="reference internal" href="#source-code-management-setup">1. <strong>Source Code Management Setup</strong></a></li>
+<li><a class="reference internal" href="#ci-environment-setup">2. <strong>CI Environment Setup</strong></a></li>
+<li><a class="reference internal" href="#ci-build-setup">3. <strong>CI Build Setup</strong></a></li>
+<li><a class="reference internal" href="#developer-workspaces">4. <strong>Developer Workspaces</strong></a></li>
+<li><a class="reference internal" href="#build-artifact-management-pipeline">5. <strong>Build Artifact Management Pipeline</strong></a></li>
+</ul>
+</li>
+</ul>
+</div>
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">NetApp Jenkins Plugin</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+      <li>Contents</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/prerequisites.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="toctree-wrapper compound">
+</div>
+<div class="section" id="contents">
+<h1>Contents<a class="headerlink" href="#contents" title="Permalink to this headline">¶</a></h1>
+<ul class="simple">
+<li><a class="reference internal" href="genindex.html"><span class="std std-ref">Index</span></a></li>
+<li><a class="reference internal" href="py-modindex.html"><span class="std std-ref">Module Index</span></a></li>
+<li><a class="reference internal" href="search.html"><span class="std std-ref">Search Page</span></a></li>
+</ul>
+</div>
+<div class="section" id="pre-requisites">
+<span id="pre"></span><h1>Pre-Requisites<a class="headerlink" href="#pre-requisites" title="Permalink to this headline">¶</a></h1>
+<blockquote>
+<div><ul class="simple">
+<li>1 running instance of <a class="reference external" href="https://mysupport.netapp.com/documentation/docweb/index.html?productID=62414&amp;language=en-US">NetApp Service Level Manager(NSLM)</a>.</li>
+<li><a class="reference external" href="https://docs.docker.com/cs-engine/1.12/">Docker Engine 1.12.5</a>. installation on atleast 2 Linux Nodes</li>
+<li><a class="reference external" href="http://netappdvp.readthedocs.io/en/latest/install/index.html">NetAppDVP 1.13</a>. installed and configured on all Linux Nodes with Docker-Engine</li>
+<li>1 running instance of <a class="reference external" href="https://www.jfrog.com/confluence/display/RTF/Installing+Artifactory">JFrog Artifactory</a>.</li>
+</ul>
+</div></blockquote>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<ul class="last">
+<li><p class="first">All validation in this solution has been done with a RHEL 7.3.</p>
+</li>
+<li><p class="first">Any number of nodes can be added in the swarm cluster, for demo purposes 2 node cluster considered in this validation.</p>
+</li>
+<li><dl class="first docutils">
+<dt>Please keep the following storage details handy:</dt>
+<dd><ol class="first last arabic simple">
+<li>Management LIF IP:                  ________________________</li>
+<li>Data LIF IP:                        ________________________</li>
+<li>Storage Virtual Machine(SVM) name:  ________________________</li>
+<li>SVM Username:                       ________________________</li>
+<li>SVM Password:                       ________________________</li>
+<li>Aggregate Name:                     ________________________</li>
+</ol>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>This solution uses following ports, please make sure these are open within your firewall:</dt>
+<dd><table border="1" class="first last docutils">
+<colgroup>
+<col width="33%" />
+<col width="22%" />
+<col width="44%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Protocol</th>
+<th class="head">Port</th>
+<th class="head">Used By</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>TCP</td>
+<td>2377</td>
+<td>Docker Swarm</td>
+</tr>
+<tr class="row-odd"><td>TCP and UDP</td>
+<td>7946</td>
+<td>Docker Swarm</td>
+</tr>
+<tr class="row-even"><td>TCP and UDP</td>
+<td>4789</td>
+<td>Docker Swarm</td>
+</tr>
+<tr class="row-odd"><td>TCP</td>
+<td>80</td>
+<td>GitLab</td>
+</tr>
+<tr class="row-even"><td>TCP</td>
+<td>1024</td>
+<td>Jenkins</td>
+</tr>
+<tr class="row-odd"><td>TCP</td>
+<td>50000</td>
+<td>Jenkins Slaves</td>
+</tr>
+</tbody>
+</table>
+</dd>
+</dl>
+</li>
+</ul>
+</div>
+</div>
+<div class="section" id="post-configration">
+<span id="post"></span><h1>Post-Configration<a class="headerlink" href="#post-configration" title="Permalink to this headline">¶</a></h1>
+<blockquote>
+<div><ol class="arabic">
+<li><p class="first"><strong>Adding ONTAP Storage system in NetApp Service Level Manager</strong></p>
+<blockquote>
+<div><blockquote>
+<div><p>1.1) Open a web browser and enter the URL “<a class="reference external" href="https://xx.xx.xx.xx:8443/admin/">https://xx.xx.xx.xx:8443/admin/</a>” where xx.xx.xx.xx is the IP address of the host machine where NetApp SLM is installed.</p>
+<p>1.2) Enter your NSLM username and password when prompted.</p>
+<p>1.3) Click on +Add and enter the details of your ONTAP Cluster.</p>
+<p>1.4) Verify that the instance of ONTAP is added as shown in the screenshot.</p>
+</div></blockquote>
+<div class="figure">
+<a class="reference internal image-reference" href="_images/addslm.png"><img alt="Adding storage system to NSLM Adding Storage Cluster to NSLM" src="_images/addslm.png" style="width: 1603.0px; height: 426.0px;" /></a>
+</div>
+</div></blockquote>
+</li>
+<li><p class="first"><strong>Building a docker image for your environment</strong></p>
+<blockquote>
+<div><p>2.1) Fork the NetApp Jenkins Plugin repo</p>
+<p>2.2) Edit the /Jenkins_Master/ontap-nas.json file with appropiate values.</p>
+<div class="figure">
+<a class="reference internal image-reference" href="_images/ontapnas.png"><img alt="Sample ontap-nas.json" src="_images/ontapnas.png" style="width: 426.0px; height: 256.0px;" /></a>
+</div>
+<p>2.3) After the ontap-nas.json file is configured, build the Jenkins Master docker image using following command:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="o">&gt;&gt;</span><span class="n">docker</span> <span class="n">build</span> <span class="o">-</span><span class="n">t</span> <span class="n">image_name</span><span class="p">:</span><span class="n">tag</span>
+</pre></div>
+</div>
+<p>2.4) Once the build is complete, push the Docker image to a registry using following command:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="o">&gt;&gt;</span><span class="n">docker</span> <span class="n">push</span> <span class="n">registry</span><span class="o">/</span><span class="n">imagename</span><span class="p">:</span><span class="n">tag</span>
+</pre></div>
+</div>
+</div></blockquote>
+</li>
+<li><dl class="first docutils">
+<dt><strong>Setting up a Docker Swarm Cluster</strong></dt>
+<dd><p class="first">3.1)Login  into a Linux Node with Docker-Engine installed.</p>
+<p>3.2)Initialize Swarm cluster using following command:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="o">&gt;&gt;</span><span class="n">docker</span> <span class="n">swarm</span> <span class="n">init</span>
+</pre></div>
+</div>
+<div class="figure">
+<a class="reference internal image-reference" href="_images/swarminit.png"><img alt="Initializing Docker Swarm Cluster" src="_images/swarminit.png" style="width: 1110.0px; height: 229.0px;" /></a>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<ul class="simple">
+<li>If there are multiple eth ports configured on the host then “–advertise-addr” &lt;IP-Address&gt; argument needs to be provided with swarm initialization.</li>
+</ul>
+<div class="figure">
+<a class="reference internal image-reference" href="_images/swarminit2.png"><img alt="Initializing Docker Swarm Cluster" src="_images/swarminit2.png" style="width: 1242.0px; height: 191.0px;" /></a>
+</div>
+<ul class="last simple">
+<li>This node will act as a Swarm manager and all swarm commands run only on the manager node.</li>
+</ul>
+</div>
+<p>3.3) Copy the swarm token generated by the aboce command and run it on a new Linux node. This new Linux node will join the swarm cluster as a swarm worker node.</p>
+<div class="figure">
+<a class="reference internal image-reference" href="_images/swarminit3.png"><img alt="Join Node as Swarm worker." src="_images/swarminit3.png" style="width: 1187.0px; height: 137.0px;" /></a>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Any number of hosts can be added in your swarm cluster, this validation demonstrates use of a 2 node swarm cluster.</p>
+</div>
+<p>3.4)Verify the status of our Swarm cluster by running the command:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="o">&gt;&gt;</span><span class="n">docker</span> <span class="n">node</span> <span class="n">ls</span>
+</pre></div>
+</div>
+<p>Both the nodes should be visible in the node list</p>
+<div class="last figure">
+<a class="reference internal image-reference" href="_images/nodels.png"><img alt="Initializing Docker Swarm Cluster" src="_images/nodels.png" style="width: 1149.0px; height: 121.0px;" /></a>
+</div>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt><strong>Running NetAppDVP on the Docker-Engine Hosts</strong></dt>
+<dd><p class="first">4.1) Make sure NetAppDVP is running on all the Linux nodes added in swarm cluster. A netappdvp process should be seen on the host</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="o">&gt;&gt;</span><span class="n">ps</span> <span class="n">ax</span> <span class="o">|</span> <span class="n">grep</span> <span class="n">netappdvp</span>
+</pre></div>
+</div>
+<div class="last figure">
+<a class="reference internal image-reference" href="_images/psax.png"><img alt="Running nDVP on the Linux Hosts" src="_images/psax.png" style="width: 1033.0px; height: 127.0px;" /></a>
+</div>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt><strong>Start the NetApp-Jenkins Docker Service</strong></dt>
+<dd><p class="first">5.1) Start the NetApp-Jenkins-Master Docker Service using following command. Use the docker image built in step 3</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="o">&gt;&gt;</span><span class="n">docker</span> <span class="n">service</span> <span class="n">create</span> <span class="o">--</span><span class="n">replicas</span> <span class="mi">1</span>
+<span class="o">--</span><span class="n">mount</span> <span class="s2">&quot;type=bind,source=/var/run/docker.sock,target=/var/run/docker.sock&quot;</span>
+<span class="o">--</span><span class="n">constraint</span> <span class="s1">&#39;node.role==manager&#39;</span> <span class="o">--</span><span class="n">restart</span><span class="o">-</span><span class="n">condition</span> <span class="n">on</span><span class="o">-</span><span class="n">failure</span>
+<span class="o">--</span><span class="n">mount</span> <span class="s2">&quot;type=volume,source=Jenkins_home,volume-driver=netapp,target=/var/jenkins_home&quot;</span>
+<span class="o">--</span><span class="n">publish</span> <span class="mi">50000</span><span class="p">:</span><span class="mi">50000</span>
+<span class="o">--</span><span class="n">publish</span> <span class="mi">1024</span><span class="p">:</span><span class="mi">8080</span>
+<span class="o">--</span><span class="n">name</span> <span class="n">jenkins</span> <span class="n">registry</span><span class="o">/</span><span class="n">imagename</span><span class="p">:</span><span class="n">tag</span>
+</pre></div>
+</div>
+<div class="figure">
+<a class="reference internal image-reference" href="_images/servicecreate.png"><img alt="Docker Service Create" src="_images/servicecreate.png" style="width: 1033.0px; height: 176.0px;" /></a>
+</div>
+<p>5.2)This command will create a docker service of a Jenkins instance with the Jenkins_Home directory mounted on a NetApp volume.To check if the Service is created successfully use the following command</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="o">&gt;&gt;</span><span class="n">docker</span> <span class="n">service</span> <span class="n">ps</span> <span class="n">jenkins</span>
+</pre></div>
+</div>
+<div class="last figure">
+<a class="reference internal image-reference" href="_images/serviceps.png"><img alt="Docker Service PS" src="_images/serviceps.png" style="width: 1569.0px; height: 160.0px;" /></a>
+</div>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt><strong>Access Jenkins UI from a Web browser</strong></dt>
+<dd><p class="first">6.1) Once the Jenkins Docker Service is up,  Navigate to the URL: <strong>http://xx.xx.xx.xx:1024/</strong>  ,where xx.xx.xx.xx is Jenkins URL</p>
+<div class="last figure">
+<a class="reference internal image-reference" href="_images/jenkinsui.png"><img alt="Jenkins UI" src="_images/jenkinsui.png" style="width: 1610.0px; height: 454.0px;" /></a>
+</div>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt><strong>Setting up environment variables and JFrog Artifactory in Jenkins</strong></dt>
+<dd><p class="first">7.1) In Jenkins UI navigate to Manage Jenkins&gt;Configure System (<a class="reference external" href="http://xx.xx.xx.xx:1024/configure">http://xx.xx.xx.xx:1024/configure</a>), where xx.xx.xx.xx is Jenkins URL</p>
+<div class="figure">
+<a class="reference internal image-reference" href="_images/jenkinsui1.png"><img alt="Manage Jenkins" src="_images/jenkinsui1.png" style="width: 1634.0px; height: 490.0px;" /></a>
+</div>
+<div class="figure">
+<a class="reference internal image-reference" href="_images/jenkinsui2.png"><img alt="Configure System" src="_images/jenkinsui2.png" style="width: 1592.0px; height: 580.0px;" /></a>
+</div>
+<p>7.2) Configure the following environment variables:</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="11%" />
+<col width="37%" />
+<col width="52%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Variable Name</th>
+<th class="head">Default Value</th>
+<th class="head">What it does?</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>APISERVER</td>
+<td>xx.xx.xx.xx:8443</td>
+<td>URL of you NetApp Service Level Manager Installation</td>
+</tr>
+<tr class="row-odd"><td>APIUSER</td>
+<td>admin</td>
+<td>Username of NSLM installation</td>
+</tr>
+<tr class="row-even"><td>APIPASS</td>
+<td><a class="reference external" href="mailto:Password&#37;&#52;&#48;123">Password<span>&#64;</span>123</a></td>
+<td>Password of NSLM installation</td>
+</tr>
+<tr class="row-odd"><td>SLAVE</td>
+<td>devopsnetapponaws/netapp-jenkins_slave:autodiscover</td>
+<td>Jenkins Slave Docker image name</td>
+</tr>
+<tr class="row-even"><td>GITLABIMAGE</td>
+<td>devopsnetapponaws/netapp-jenkins_gitlab</td>
+<td>SCM Docker Image name</td>
+</tr>
+<tr class="row-odd"><td>VOLSIZE</td>
+<td>4096</td>
+<td>Size of volumes created in MB’s</td>
+</tr>
+<tr class="row-even"><td>VS</td>
+<td>lab2</td>
+<td>Storage Tenant to create volumes</td>
+</tr>
+<tr class="row-odd"><td>REPOUSERNAME</td>
+<td>admin</td>
+<td>Username for private docker registry</td>
+</tr>
+<tr class="row-even"><td>REPOPASSWORD</td>
+<td>password</td>
+<td>Password for private docker registry</td>
+</tr>
+<tr class="row-odd"><td>ART_URL</td>
+<td>xx.xx.xx.xx:5001</td>
+<td>URL of your private registry(IP:PORT)</td>
+</tr>
+<tr class="row-even"><td>ART_REPO</td>
+<td>docker-dev</td>
+<td>Repository name to push docker images and zip files</td>
+</tr>
+</tbody>
+</table>
+<p>Sample configuration:</p>
+<div class="last figure">
+<a class="reference internal image-reference" href="_images/envvariables.png"><img alt="Environment Variables" src="_images/envvariables.png" style="width: 1301.0px; height: 892.0px;" /></a>
+</div>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt><strong>Setting Up Artifactory</strong></dt>
+<dd><p class="first">8.1) In Jenkins UI navigate to Manage Jenkins&gt;Configure System (<a class="reference external" href="http://xx.xx.xx.xx:1024/configure">http://xx.xx.xx.xx:1024/configure</a>) , where xx.xx.xx.xx is Jenkins URL</p>
+<p>8.2) Scroll down until the Artifactory section</p>
+<p>8.3) Enter your SERVER ID (eg: 1)</p>
+<p>8.4) Enter your Artifactory Server Link</p>
+<p>8.5) Click Save</p>
+<div class="figure">
+<a class="reference internal image-reference" href="_images/artconf.png"><img alt="Configuring Artifactory" src="_images/artconf.png" style="width: 1575.0px; height: 874.0px;" /></a>
+</div>
+<div class="last admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Check if the Jenkins URL in Jenkins Location tab maps to the URL of the Linux node running the Jenkins Master Docker Service.</p>
+</div>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt><strong>Configure Maven Home in Jenkins</strong></dt>
+<dd><p class="first">9.1) In the Jenkins Slave Image we already have installed maven at the default location i.e  /usr/share/maven</p>
+<p>9.2) Navigate to Manage Jenkins &gt; Global Tool Configuration (<a class="reference external" href="http://xx.xx.xx.xx:1024/configureTools/">http://xx.xx.xx.xx:1024/configureTools/</a>) , where xx.xx.xx.xx is Jenkins URL</p>
+<p>9.3) Scroll down till the Maven Section</p>
+<p>9.4) Click Add Maven</p>
+<p>9.5) Enter Maven Installation name (eg: Maven)</p>
+<p>9.6) Enter Maven Path as /usr/share/maven , as shown in below screenshot</p>
+<div class="figure">
+<a class="reference internal image-reference" href="_images/mavenconf.png"><img alt="Configuring Artifactory" src="_images/mavenconf.png" style="width: 1595.0px; height: 931.0px;" /></a>
+</div>
+<div class="last admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">As part of this validation, a Maven sample project is used, If the production environment has any other type of build, that needs to be configured here.</p>
+</div>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt><strong>Approving the NetApp Groovy Pipelines</strong></dt>
+<dd><p class="first">10.1) In Jenkins UI navigate to Manage Jenkins&gt;In-Process Script Approval (<a class="reference external" href="http://xx.xx.xx.xx:1024/configure">http://xx.xx.xx.xx:1024/configure</a>) , where xx.xx.xx.xx is Jenkins URL</p>
+<p>10.2) As per the latest Jenkins security update, any external script in Jenkins needs to be approved. Click Approve for the 4 NetApp Groovy Scripts</p>
+<div class="last figure">
+<a class="reference internal image-reference" href="_images/scriptapproval.png"><img alt="Approve Scripts" src="_images/scriptapproval.png" style="width: 1600.0px; height: 963.0px;" /></a>
+</div>
+</dd>
+</dl>
+</li>
+</ol>
+</div></blockquote>
+</div>
+<div class="section" id="predefined-pipelines-and-jobs">
+<h1>Predefined Pipelines and Jobs<a class="headerlink" href="#predefined-pipelines-and-jobs" title="Permalink to this headline">¶</a></h1>
+<blockquote>
+<div><ol class="arabic simple">
+<li>This solution has following 4  prefdefined pipelines:</li>
+</ol>
+<table border="1" class="docutils">
+<colgroup>
+<col width="19%" />
+<col width="49%" />
+<col width="32%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Pipelines</th>
+<th class="head">Tasks</th>
+<th class="head">Jobs Included in the Pipeline</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>Source Code Management</td>
+<td>1)Spin up a GitLab Docker Container</td>
+<td>JFrog_OSS_Repo</td>
+</tr>
+<tr class="row-odd"><td>Continous Integretion</td>
+<td>1)Get the Local Git Repo URL <br />
+2)Spin up Container where CI Builds will Run <br />
+3)Pull the code from Gitlab to this container <br />
+4)Start the CI Build <br />
+5)Automatic Snapshot Creation for Every successful build.</td>
+<td>JFrog_2017_1 <br />
+Create_Build_Checkpoints <br />
+List_Build_Checkpoints  <br /></td>
+</tr>
+<tr class="row-even"><td>Developer Workspace</td>
+<td>1)Create prepackaged workspaces (containers) from snapshots</td>
+<td>UserWorkspaces  <br />
+SCM_Checkpoints   <br />
+List_SCM_Checkpoints</td>
+</tr>
+<tr class="row-odd"><td>Build_Artifact_Management</td>
+<td>1)Spin up a container to archive builds               <br />
+2)Zip a Build Environment and push it to artifactory  <br />
+3)Create a Docker image of Build environment and push it to a repo</td>
+<td>Build_Artifacts_JFrog_2017 <br />
+Zip_And_Copy               <br />
+Create_Docker_Image</td>
+</tr>
+</tbody>
+</table>
+</div></blockquote>
+</div>
+<div class="section" id="workflow">
+<span id="id1"></span><h1>Workflow<a class="headerlink" href="#workflow" title="Permalink to this headline">¶</a></h1>
+<p>The CI workflow is defined as following stages in this solution:</p>
+<blockquote>
+<div><div class="figure">
+<a class="reference internal image-reference" href="_images/workflow.png"><img alt="Workflow" src="_images/workflow.png" style="width: 899.0px; height: 396.0px;" /></a>
+</div>
+<ul class="simple">
+<li>Source Code Management Setup</li>
+<li>Continuous Integration Environment Setup</li>
+<li>Continuous Integration Build Setup</li>
+<li>Developer Workspace Creation</li>
+<li>Build Artifact Management</li>
+</ul>
+</div></blockquote>
+<div class="section" id="source-code-management-setup">
+<span id="scm"></span><h2>1. <strong>Source Code Management Setup</strong><a class="headerlink" href="#source-code-management-setup" title="Permalink to this headline">¶</a></h2>
+<p>This pipeline will setup a GitLab container which acts as a SCM tool in this solution.</p>
+<blockquote>
+<div><p>1.1) Click on the  <em>Source_Code_Management &gt; Build Now</em></p>
+<div class="figure">
+<a class="reference internal image-reference" href="_images/scmpipeline.png"><img alt="SCM Pipeline" src="_images/scmpipeline.png" style="width: 1503.0px; height: 462.0px;" /></a>
+</div>
+<p>1.2) A Jenkins Stage named GIT Repository is started when the Source_Code_Management pipeline is built.</p>
+<div class="figure">
+<a class="reference internal image-reference" href="_images/scmpipeline2.png"><img alt="SCM Pipeline2" src="_images/scmpipeline2.png" style="width: 1615.0px; height: 663.0px;" /></a>
+</div>
+<p>1.3) The GitLab Container can be seen on the Linux Host by running a “docker ps” command.:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="o">&gt;&gt;</span> <span class="n">docker</span> <span class="n">ps</span>
+</pre></div>
+</div>
+<div class="figure">
+<a class="reference internal image-reference" href="_images/gitlabcontainer.png"><img alt="Check Gitlab on Host" src="_images/gitlabcontainer.png" style="width: 1575.0px; height: 217.0px;" /></a>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">It takes about 2-5 minutes for GitLab to start.</p>
+</div>
+<p>1.4) Configuring Gitlab
+Navigate to <a class="reference external" href="http:/">http:/</a>/&lt;&lt;RHEL-VM-IP&gt;&gt;/ in your browser and and set a root password for GitLab</p>
+<div class="figure">
+<a class="reference internal image-reference" href="_images/gitlab1.png"><img alt="Set GitLab password" src="_images/gitlab1.png" style="width: 1307.0px; height: 508.0px;" /></a>
+</div>
+<p>1.5) After you set a password, Login into Gitlab using the recently set password on the same page.</p>
+<div class="figure">
+<a class="reference internal image-reference" href="_images/gitlablogin.png"><img alt="Set GitLab password" src="_images/gitlablogin.png" style="width: 874.0px; height: 578.0px;" /></a>
+</div>
+<p>1.6) Once logged into GitLab, Create a New Project</p>
+<div class="figure">
+<a class="reference internal image-reference" href="_images/gitlabnewproject.png"><img alt="GitLab New Project" src="_images/gitlabnewproject.png" style="width: 599.0px; height: 625.0px;" /></a>
+</div>
+<p>1.7) Import code repo into the local GitLab instance. For this validation Sample Hello world codes from JFrog’s GitHub Repo are used:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">github</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">JFrogDev</span><span class="o">/</span><span class="n">project</span><span class="o">-</span><span class="n">examples</span><span class="o">.</span><span class="n">git</span>
+</pre></div>
+</div>
+<div class="figure">
+<a class="reference internal image-reference" href="_images/codeimport.png"><img alt="Code Import" src="_images/codeimport.png" style="width: 1622.0px; height: 881.0px;" /></a>
+</div>
+<p>1.8) When the code import is complete, Note the Local Git URL</p>
+<div class="figure">
+<a class="reference internal image-reference" href="_images/giturl.png"><img alt="Code Import" src="_images/giturl.png" style="width: 1672.0px; height: 604.0px;" /></a>
+</div>
+<dl class="docutils">
+<dt>1.9) Adding a WebHook for automatic SCM Checkpoint Creation.</dt>
+<dd><ul class="first">
+<li><p class="first">To add a webhook in Jenkins, Click the Settings button at right corner of the GitLab project and select Integrations</p>
+</li>
+<li><p class="first">Add a the following Jenkins Job  WebHook URL</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span>http://&lt;&lt;Jenkins-Master-IP&gt;&gt;:1024/job/SCMCheckpoints/buildWithParameters?token=secret&amp;VOL=&lt;&lt;SCM_Project_Name&gt;&gt;
+</pre></div>
+</div>
+</li>
+<li><p class="first">Add the Secret Token as “secret”</p>
+</li>
+<li><p class="first">Click Add WebHook</p>
+</li>
+</ul>
+<div class="figure">
+<a class="reference internal image-reference" href="_images/webhook.png"><img alt="Code Import" src="_images/webhook.png" style="width: 1586.0px; height: 976.0px;" /></a>
+</div>
+<ul class="simple">
+<li>This WebHook will automatically trigger a Jenkins Job(SCMCheckpoints) to create snapshot for every git push made in the SCM</li>
+</ul>
+<div class="last admonition note">
+<p class="first admonition-title">Note</p>
+<p>If you change your SCM Job name in Jenkins , use the same job name in this WebHook, as this will trigger a snapshot of your SCM volume.</p>
+<p>Navigate to SCMCheckpoints job on Jenkins UI .
+(<a class="reference external" href="http://xx.xx.xx.xx:1024/view/All/job/SCMCheckpoints/configure">http://xx.xx.xx.xx:1024/view/All/job/SCMCheckpoints/configure</a>) , where xx.xx.xx.xx is the IP of your RHEL VM running the Jenkins OSS Container.</p>
+<p>The build trigger in Authentication Token field should correspond to secret key set in GitLab WebHook</p>
+<p>Make sure the SCM Section has the Git URL of the project as it collects the SHA ID from here.</p>
+<div class="last figure">
+<a class="reference internal image-reference" href="_images/scmcheckpoint.png"><img alt="SCM Checkpoints" src="_images/scmcheckpoint.png" style="width: 1309.0px; height: 978.0px;" /></a>
+</div>
+</div>
+</dd>
+</dl>
+</div></blockquote>
+</div>
+<div class="section" id="ci-environment-setup">
+<span id="cienv"></span><h2>2. <strong>CI Environment Setup</strong><a class="headerlink" href="#ci-environment-setup" title="Permalink to this headline">¶</a></h2>
+<p>This pipeline will build a Continuous Integration Environment where a CI Build will run for the project</p>
+<blockquote>
+<div><blockquote>
+<div><p>2.1) The Continuous Integration (Integrated Builds) stage will build a Docker Container named JFrog_2017_1 which acts as our CI-Environment with a NetApp Volume named JFrog_2017_1 mounted on it.</p>
+<div class="figure">
+<a class="reference internal image-reference" href="_images/startcipipeline.png"><img alt="Code Import" src="_images/startcipipeline.png" style="width: 1502.0px; height: 462.0px;" /></a>
+</div>
+<p>2.2) The CI Environment runs as a docker service on one of the swarm node. This can be verified by listing all docekr services on Swarm Manager node.:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="o">&gt;&gt;</span><span class="n">docker</span> <span class="n">service</span> <span class="n">ls</span>
+</pre></div>
+</div>
+<p>2.3) To check where the service is running , use the command</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="o">&gt;&gt;</span><span class="n">docker</span> <span class="n">service</span> <span class="n">ps</span> <span class="o">&lt;&lt;</span><span class="n">CI</span><span class="o">-</span><span class="n">Environment</span><span class="o">-</span><span class="n">Job</span><span class="o">-</span><span class="n">Name</span><span class="o">&gt;</span>
+</pre></div>
+</div>
+<div class="figure">
+<a class="reference internal image-reference" href="_images/showserviceps.png"><img alt="Service Ps" src="_images/showserviceps.png" style="width: 1573.0px; height: 108.0px;" /></a>
+</div>
+<p>2.4)  A NetApp volume mount can be verified on the linux host by going inside the context of the container</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="o">&gt;&gt;</span><span class="n">docker</span> <span class="n">ps</span>
+<span class="o">&gt;&gt;</span><span class="n">docker</span> <span class="n">exec</span> <span class="o">-</span><span class="n">it</span> <span class="o">&lt;&lt;</span><span class="n">Container</span><span class="o">-</span><span class="n">ID</span><span class="o">&gt;&gt;</span> <span class="n">bash</span>
+<span class="o">&gt;&gt;</span><span class="n">df</span>
+</pre></div>
+</div>
+</div></blockquote>
+<div class="figure">
+<a class="reference internal image-reference" href="_images/dockerlogin.png"><img alt="Service Ps" src="_images/dockerlogin.png" style="width: 1583.0px; height: 360.0px;" /></a>
+</div>
+</div></blockquote>
+</div>
+<div class="section" id="ci-build-setup">
+<span id="cibuild"></span><h2>3. <strong>CI Build Setup</strong><a class="headerlink" href="#ci-build-setup" title="Permalink to this headline">¶</a></h2>
+<blockquote>
+<div><p>3.1) Create a Maven Job named “JFrog_CI_Build” in Jenkins by going to  New Item &gt; Create Maven Job</p>
+<div class="figure">
+<a class="reference internal image-reference" href="_images/dockerlogin.png"><img alt="Service Ps" src="_images/dockerlogin.png" style="width: 1583.0px; height: 360.0px;" /></a>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">For this validation a sample Hello-World maven code from JFrog_Repo is used.</p>
+</div>
+<p>3.2) Configuring the JFrog_CI_Build Maven Job</p>
+<blockquote>
+<div><p>Following sections need to be configured in the Maven Job:</p>
+<ul class="simple">
+<li>Restrict the project to run in the previously created CI-Environment
+Enter the label : “JFrog_2017_1”</li>
+</ul>
+<div class="figure">
+<a class="reference internal image-reference" href="_images/restrict.png"><img alt="Restrict Job to run in CI Environment" src="_images/restrict.png" style="width: 1594.0px; height: 666.0px;" /></a>
+</div>
+<ul class="simple">
+<li>Add Local Gitlab URL in the SCM section</li>
+</ul>
+<div class="figure">
+<a class="reference internal image-reference" href="_images/ciscm.png"><img alt="Add SCM URL for CI Build" src="_images/ciscm.png" style="width: 1598.0px; height: 703.0px;" /></a>
+</div>
+<ul>
+<li><p class="first">In Build Triggers select the option POLL SCM and set per minute polling schedule:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="o">*</span> <span class="o">*</span> <span class="o">*</span> <span class="o">*</span> <span class="o">*</span>
+</pre></div>
+</div>
+</li>
+</ul>
+<div class="figure">
+<a class="reference internal image-reference" href="_images/cipoll.png"><img alt="Add SCM URL for CI Build" src="_images/cipoll.png" style="width: 1603.0px; height: 571.0px;" /></a>
+</div>
+<ul class="simple">
+<li>In Build Environment Section, select Resolve Artifacts from Artifactory.
+Click Refresh Repositories
+Select the repositories to resolve the artifacts from Artifactory</li>
+</ul>
+<blockquote>
+<div><div class="figure">
+<a class="reference internal image-reference" href="_images/buildenv.png"><img alt="Add SCM URL for CI Build" src="_images/buildenv.png" style="width: 1595.0px; height: 652.0px;" /></a>
+</div>
+</div></blockquote>
+<ul>
+<li><p class="first">In the Build Section, enter relative path of the pom.xml file and set the install goal</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span>ROOT POM:     “maven-example/pom.xml”
+Goals:        “install -DskipTests”
+</pre></div>
+</div>
+</li>
+<li><p class="first">Select Use private Maven Repository checkbox and point it to use Local to Workspace.
+This ensures all the artifacts stay on a NetApp workspace.</p>
+</li>
+<li><p class="first">Click the Advanced tab and select use Custom Workspace, Enter the workspace as:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="o">/</span><span class="n">workspace</span><span class="o">/&lt;&lt;</span><span class="n">CI</span><span class="o">-</span><span class="n">Environment</span><span class="o">-</span><span class="n">Name</span><span class="o">&gt;&gt;</span>
+</pre></div>
+</div>
+<p>This ensures that the project is being built on a NetApp workspace.</p>
+</li>
+</ul>
+<div class="figure">
+<a class="reference internal image-reference" href="_images/environment.png"><img alt="Add SCM URL for CI Build" src="_images/environment.png" style="width: 1274.0px; height: 985.0px;" /></a>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<ul class="last simple">
+<li>Please fill in these values as per your environment/code structure</li>
+<li>The custom workspace field should be in the format “/workspace/
+&lt;&lt;Your-CI-Environment-Job-Name&gt;&gt;</li>
+</ul>
+</div>
+</div></blockquote>
+<p>3.3) Configuring automatic creation of snapshots of successful builds.</p>
+<blockquote>
+<div><ul class="simple">
+<li>Navigate to All Jenkins Jobs</li>
+<li>Select the job “Create_Build_Checkpoints”</li>
+</ul>
+<div class="figure">
+<a class="reference internal image-reference" href="_images/buildcheckpoints.png"><img alt="Setup BUildCheckpoints" src="_images/buildcheckpoints.png" style="width: 1617.0px; height: 783.0px;" /></a>
+</div>
+<ul class="simple">
+<li>Select Configure</li>
+</ul>
+<div class="figure">
+<a class="reference internal image-reference" href="_images/buildcheckpointsconf.png"><img alt="BuildConfigure" src="_images/buildcheckpointsconf.png" style="width: 1613.0px; height: 567.0px;" /></a>
+</div>
+<ul>
+<li><p class="first">Configure the folloeing sections of CreateBuildCheckpoints job:</p>
+<blockquote>
+<div><ul class="simple">
+<li>In the general section, Select this project is parameterized option and set the default value as your &lt;&lt;CI-Environment-Name&gt;&gt;</li>
+<li>In the Build Trigger section,
+Enter the name of CI Build Name.
+Select trigger only if build is stable.</li>
+</ul>
+</div></blockquote>
+</li>
+</ul>
+<div class="figure">
+<a class="reference internal image-reference" href="_images/buildtrigger.png"><img alt="BuildTrigger" src="_images/buildtrigger.png" style="width: 1600.0px; height: 642.0px;" /></a>
+</div>
+</div></blockquote>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Note on Multiple CI Builds</p>
+</div>
+</div></blockquote>
+</div>
+<div class="section" id="developer-workspaces">
+<span id="devworkspace"></span><h2>4. <strong>Developer Workspaces</strong><a class="headerlink" href="#developer-workspaces" title="Permalink to this headline">¶</a></h2>
+<p>This Pipeline Job will Create User Workspaces for Private Builds on NetApp FlexClones</p>
+<blockquote>
+<div><p>4.1) Select Developer Workspace Pipeline and Click Build Now</p>
+<div class="figure">
+<a class="reference internal image-reference" href="_images/devpipeline1.png"><img alt="Developer Pipeline Creation" src="_images/devpipeline1.png" style="width: 1612.0px; height: 435.0px;" /></a>
+</div>
+<div class="figure">
+<a class="reference internal image-reference" href="_images/devpipeline2.png"><img alt="Developer Pipeline Build" src="_images/devpipeline2.png" style="width: 1608.0px; height: 508.0px;" /></a>
+</div>
+<p>4.2) This pipeline requires following inputs:</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="29%" />
+<col width="19%" />
+<col width="52%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Input</th>
+<th class="head">Default</th>
+<th class="head">What it does</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>UID</td>
+<td>301</td>
+<td>UID for the Developer</td>
+</tr>
+<tr class="row-odd"><td>GID</td>
+<td>300</td>
+<td>GID for the Developer</td>
+</tr>
+<tr class="row-even"><td>CI Dev Branch Name</td>
+<td>JFrog_2017_1</td>
+<td>Name of CI Environment</td>
+</tr>
+<tr class="row-odd"><td>Workspace Name</td>
+<td>Dev1</td>
+<td>Name of workspace to create</td>
+</tr>
+</tbody>
+</table>
+<div class="figure">
+<a class="reference internal image-reference" href="_images/devworkspace1.png"><img alt="DeveloperWorkspace" src="_images/devworkspace1.png" style="width: 1615.0px; height: 700.0px;" /></a>
+</div>
+<p>4.3) Click Proceed and Hover over the Pipeline stage to select build checkpoint to create a workspace and click Proceed.</p>
+<div class="figure">
+<a class="reference internal image-reference" href="_images/devcheckpoint1.png"><img alt="Developer Checkpoint1" src="_images/devcheckpoint1.png" style="width: 1616.0px; height: 628.0px;" /></a>
+</div>
+<div class="figure">
+<a class="reference internal image-reference" href="_images/devcheckpoint2.png"><img alt="Developer Checkpoint2" src="_images/devcheckpoint2.png" style="width: 1614.0px; height: 451.0px;" /></a>
+</div>
+<p>4.4) A new docker service with a Private workspace for the Developer will be available on the Linux host. This can be checked by running following command on the host.</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="o">&gt;&gt;</span><span class="n">docker</span> <span class="n">service</span> <span class="n">ls</span>
+<span class="o">&gt;&gt;</span><span class="n">docker</span> <span class="n">service</span> <span class="n">ps</span> <span class="o">&lt;&lt;</span><span class="n">Service_Name</span><span class="o">&gt;&gt;</span>
+</pre></div>
+</div>
+<div class="figure">
+<a class="reference internal image-reference" href="_images/devservice.png"><img alt="Developer container Service" src="_images/devservice.png" style="width: 1576.0px; height: 230.0px;" /></a>
+</div>
+<p>4.5) The contents of this docker service can be verified by going inside the context of the container.</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="o">&gt;&gt;</span> <span class="n">docker</span> <span class="n">exec</span> <span class="o">-</span><span class="n">it</span> <span class="o">&lt;&lt;</span><span class="n">Service</span> <span class="n">Container</span> <span class="n">ID</span><span class="o">&gt;&gt;</span> <span class="n">bash</span>
+</pre></div>
+</div>
+<p>4.6) All the source files and artifacts will be present at</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="o">/</span><span class="n">workspace</span><span class="o">/&lt;&lt;</span><span class="n">Developer</span><span class="o">-</span><span class="n">Workspace</span><span class="o">-</span><span class="n">Name</span><span class="o">&gt;&gt;</span>
+</pre></div>
+</div>
+<div class="figure">
+<a class="reference internal image-reference" href="_images/servicecontainer.png"><img alt="Developer container Service" src="_images/servicecontainer.png" style="width: 831.0px; height: 636.0px;" /></a>
+</div>
+<p>4.7) Developer can make changes to the code and then commit them.</p>
+<blockquote>
+<div><ul>
+<li><p class="first">Set the git username and email for the Developer.</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span>&gt;&gt; git config –global user.name “Dev1”
+
+&gt;&gt; git config –global user.email “Dev1@netapp.com”
+</pre></div>
+</div>
+</li>
+</ul>
+</div></blockquote>
+<p>4.8) For this validation we will make changes to the master branch</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="o">&gt;&gt;</span> <span class="n">git</span> <span class="n">checkout</span> <span class="n">master</span>
+</pre></div>
+</div>
+<p>4.9) As a example, a small Hello World to Hello NetApp code change is shown as example.</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="o">&gt;&gt;</span> <span class="n">vi</span> <span class="n">maven</span><span class="o">-</span><span class="n">example</span><span class="o">/</span><span class="n">multi3</span><span class="o">/</span><span class="n">src</span><span class="o">/</span><span class="n">main</span><span class="o">/</span><span class="n">java</span><span class="o">/</span><span class="n">artifactory</span><span class="o">/</span><span class="n">test</span><span class="o">/</span><span class="n">Multi3</span><span class="o">.</span><span class="n">java</span>
+</pre></div>
+</div>
+<div class="figure">
+<a class="reference internal image-reference" href="_images/codechange.png"><img alt="Code Change" src="_images/codechange.png" style="width: 1128.0px; height: 268.0px;" /></a>
+</div>
+<p>4.10) Commit the changes.:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span>&gt;&gt; git commit –all
+</pre></div>
+</div>
+<div class="figure">
+<a class="reference internal image-reference" href="_images/gitcommit.png"><img alt="Git Commit" src="_images/gitcommit.png" style="width: 1362.0px; height: 67.0px;" /></a>
+</div>
+<p>4.11) If the changes pass the pre-push hook, then developer can go ahead and push the code to SCM.</p>
+<div class="figure">
+<a class="reference internal image-reference" href="_images/gitpush.png"><img alt="Git Push" src="_images/gitpush.png" style="width: 1280.0px; height: 214.0px;" /></a>
+</div>
+<p>4.12) This recent push will reflect in GitLab UI.</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="o">&gt;&gt;</span> <span class="n">http</span><span class="p">:</span><span class="o">//&lt;&lt;</span><span class="n">Jenkins</span><span class="o">-</span><span class="n">Host</span><span class="o">-</span><span class="n">IP</span><span class="o">/&gt;&gt;</span>
+</pre></div>
+</div>
+<div class="figure">
+<a class="reference internal image-reference" href="_images/gitlabui.png"><img alt="GitLab UI" src="_images/gitlabui.png" style="width: 1602.0px; height: 982.0px;" /></a>
+</div>
+<p>4.13) After the Git Push, the CI job will be triggered automatically as there was a change in SCM and the polling is done for every minute.</p>
+<div class="figure">
+<a class="reference internal image-reference" href="_images/scmchange.png"><img alt="SCM Change" src="_images/scmchange.png" style="width: 1596.0px; height: 981.0px;" /></a>
+</div>
+</div></blockquote>
+</div>
+<div class="section" id="build-artifact-management-pipeline">
+<span id="bam"></span><h2>5. <strong>Build Artifact Management Pipeline</strong><a class="headerlink" href="#build-artifact-management-pipeline" title="Permalink to this headline">¶</a></h2>
+<dl class="docutils">
+<dt>This pipeline will  i) Create a Build Artifact Container</dt>
+<dd><blockquote class="first">
+<div><ol class="lowerroman simple" start="2">
+<li>Create Zip of all the volume contents</li>
+<li>Create Docker Image of running CI Environment</li>
+</ol>
+</div></blockquote>
+<p>5.1) Select Build Artifact Management Pipeline and click build now</p>
+<div class="figure">
+<a class="reference internal image-reference" href="_images/bampipeline.png"><img alt="BAM Pipeline" src="_images/bampipeline.png" style="width: 1616.0px; height: 486.0px;" /></a>
+</div>
+<p>5.2) This pipeline requires following inputs:</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="20%" />
+<col width="33%" />
+<col width="47%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Input</th>
+<th class="head">Default</th>
+<th class="head">What it does</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>CI Dev Branch to be Artifact</td>
+<td>JFrog_2017_1</td>
+<td>Name of CI Build Environment to Artifact</td>
+</tr>
+<tr class="row-odd"><td>Build Artifact Container</td>
+<td>Build_Artifact_JFrog_2017_1</td>
+<td>This container will store</td>
+</tr>
+<tr class="row-even"><td>Name of Zip File to Create</td>
+<td>JFrog_2017_1.zip</td>
+<td>A Zip file containing all contents of volumes is created.</td>
+</tr>
+<tr class="row-odd"><td>Docker Image Name to Create</td>
+<td>&lt;&lt;Artifactory-IP:PORT&gt;&gt;/image1:version1</td>
+<td>Creates docker image of build environment with this name.</td>
+</tr>
+<tr class="row-even"><td>Checkpoint</td>
+<td>Select from a DropDown</td>
+<td>Creates a temporary clone from this checkpoint.</td>
+</tr>
+</tbody>
+</table>
+<p>5.3) Build the Pipeline</p>
+<p>5.4) If the build is successful, a docker image will be pushed to the docker-dev repo in Artifactory.</p>
+<div class="last figure">
+<a class="reference internal image-reference" href="_images/dockerimage.png"><img alt="docker image" src="_images/dockerimage.png" style="width: 1680.0px; height: 946.0px;" /></a>
+</div>
+</dd>
+</dl>
+</div>
+</div>
+
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2017, Akshay Patil.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'./',
+            VERSION:'2.0',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="_static/jquery.js"></script>
+      <script type="text/javascript" src="_static/underscore.js"></script>
+      <script type="text/javascript" src="_static/doctools.js"></script>
+      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>
