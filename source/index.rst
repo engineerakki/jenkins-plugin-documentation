@@ -9,7 +9,7 @@
   
     
 
-Welcome to NetApp-Jenkins-Plugin 2.0 documentation!
+Welcome to NetApp-Jenkins-Framework 2.0 documentation!
 =======================================================
 
 The NetApp-Jenkins integration is an end-to-end framework from creating code repository until zipping the successful builds in the artifactory location. All these processes run as Docker-containers and use persistent NetApp storage with NetApp Docker volume plugin (nDVP).
