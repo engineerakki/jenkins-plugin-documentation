@@ -51,8 +51,8 @@ source_suffix = '.rst'
 master_doc = 'index'
 
 # General information about the project.
-project = u'NetApp Jenkins Plugin'
-copyright = u'2017, Akshay Patil'
+project = u'NetApp Jenkins Framework'
+copyright = u'2017, NetApp'
 author = u'Akshay Patil'
 
 # The version info for the project you're documenting, acts as replacement for
