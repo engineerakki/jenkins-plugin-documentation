@@ -1,0 +1,360 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>JFrog Artifactory &mdash; NetApp Jenkins Plugin 2.0 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="genindex.html"/>
+        <link rel="search" title="Search" href="search.html"/>
+    <link rel="top" title="NetApp Jenkins Plugin 2.0 documentation" href="index.html"/> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="index.html" class="icon icon-home"> NetApp Jenkins Plugin
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                2.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <!-- Local TOC -->
+              <div class="local-toc"><ul>
+<li><a class="reference internal" href="#">JFrog Artifactory</a></li>
+<li><a class="reference internal" href="#prerequisites">Prerequisites</a></li>
+<li><a class="reference internal" href="#jfrog-artifactory-on-docker">JFrog Artifactory on Docker</a></li>
+</ul>
+</div>
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">NetApp Jenkins Plugin</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+      <li>JFrog Artifactory</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/jfrog-install.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="toctree-wrapper compound">
+</div>
+<div class="section" id="jfrog-artifactory">
+<span id="jfroginstall"></span><h1>JFrog Artifactory<a class="headerlink" href="#jfrog-artifactory" title="Permalink to this headline">¶</a></h1>
+</div>
+<div class="section" id="prerequisites">
+<span id="jfrogprerequisites"></span><h1>Prerequisites<a class="headerlink" href="#prerequisites" title="Permalink to this headline">¶</a></h1>
+<blockquote>
+<div><ul class="simple">
+<li>A host (VM/Physical-server/AWS) with any any flavour of linux.</li>
+<li><a class="reference external" href="https://docs.docker.com/cs-engine/1.12/">Docker Engine 1.12.5</a></li>
+<li><a class="reference external" href="http://netappdvp.readthedocs.io/en/latest/install/index.html">NetAppDVP 1.13</a>.</li>
+<li><cite>Docker Compose &lt;https://docs.docker.com/compose/install/&gt;</cite></li>
+</ul>
+</div></blockquote>
+</div>
+<div class="section" id="jfrog-artifactory-on-docker">
+<span id="jfrogmain"></span><h1>JFrog Artifactory on Docker<a class="headerlink" href="#jfrog-artifactory-on-docker" title="Permalink to this headline">¶</a></h1>
+<blockquote>
+<div><p>We recommend to install JFrog Artifactory via docker-compose from the following YAML file. :</p>
+<p>Use the following Compose file to install JFrog Artifactory:</p>
+</div></blockquote>
+<div class="highlight-yaml"><div class="highlight"><pre><span></span><span class="c1"># Version 2 without namespacing. Required env variables :</span>
+<span class="c1">#</span>
+<span class="c1"># ART_LOGIN (optional, default=admin)</span>
+<span class="c1"># ART_PASSWORD (optional, default=password)</span>
+<span class="c1">#</span>
+<span class="l l-Scalar l-Scalar-Plain">version</span><span class="p p-Indicator">:</span> <span class="s">&#39;2&#39;</span>
+<span class="l l-Scalar l-Scalar-Plain">services</span><span class="p p-Indicator">:</span>
+  <span class="l l-Scalar l-Scalar-Plain">artifactory-node1</span><span class="p p-Indicator">:</span>
+  <span class="l l-Scalar l-Scalar-Plain">image</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">jfrog-docker-reg2.bintray.io/jfrog/artifactory-ha-primary:5.1.4</span>
+<span class="l l-Scalar l-Scalar-Plain">ports</span><span class="p p-Indicator">:</span>
+        <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">8081:8081</span>
+        <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">10017:10017</span>
+<span class="l l-Scalar l-Scalar-Plain">volumes</span><span class="p p-Indicator">:</span>
+        <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">~/data/artifactory/node1/etc:/var/opt/jfrog/artifactory/etc</span>
+        <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">artdata:/var/opt/jfrog/artifactory/data</span>
+        <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">~/data/artifactory/node1/logs:/var/opt/jfrog/artifactory/logs</span>
+<span class="l l-Scalar l-Scalar-Plain">environment</span><span class="p p-Indicator">:</span>
+        <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">DB_TYPE=mysql</span>
+        <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">DB_HOST=mysqldb</span>
+        <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">DB_PORT=3306</span>
+        <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">HA_IS_PRIMARY=true</span>
+        <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">HA_MEMBERSHIP_PORT=10017</span>
+        <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">DB_USER=artifactory</span>
+        <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">DB_PASSWORD=password</span>
+        <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">ART_LICENSES=&quot;&lt;&lt;YOUR_ARTIFACTORY_LICENSE&gt;&gt;&quot;</span>
+<span class="l l-Scalar l-Scalar-Plain">depends_on</span><span class="p p-Indicator">:</span>
+        <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">mysqldb</span>
+<span class="l l-Scalar l-Scalar-Plain">restart</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">always</span>
+<span class="l l-Scalar l-Scalar-Plain">artifactory-node2</span><span class="p p-Indicator">:</span>
+        <span class="l l-Scalar l-Scalar-Plain">image</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">jfrog-docker-reg2.bintray.io/jfrog/artifactory-ha-primary:5.1.4</span>
+<span class="l l-Scalar l-Scalar-Plain">ports</span><span class="p p-Indicator">:</span>
+        <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">8082:8081</span>
+        <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">10018:10017</span>
+<span class="l l-Scalar l-Scalar-Plain">volumes</span><span class="p p-Indicator">:</span>
+        <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">~/data/artifactory/node2/etc:/var/opt/jfrog/artifactory/etc</span>
+        <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">artdata:/var/opt/jfrog/artifactory/data</span>
+        <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">~/data/artifactory/node2/logs:/var/opt/jfrog/artifactory/logs</span>
+<span class="l l-Scalar l-Scalar-Plain">environment</span><span class="p p-Indicator">:</span>
+        <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">DB_TYPE=mysql</span>
+        <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">ART_PRIMARY_BASE_URL=http://artifactory-node1:8081/artifactory</span>
+        <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">DB_HOST=mysqldb</span>
+        <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">DB_PORT=3306</span>
+        <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">HA_IS_PRIMARY=false</span>
+        <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">HA_MEMBERSHIP_PORT=10017</span>
+        <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">DB_USER=artifactory</span>
+        <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">DB_PASSWORD=password</span>
+        <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">ART_LICENSES=&quot;&lt;&lt;YOUR_ARTIFACTORY_LICENSE&gt;&gt;&quot;</span>
+<span class="l l-Scalar l-Scalar-Plain">depends_on</span><span class="p p-Indicator">:</span>
+        <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">artifactory-node1</span>
+        <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">mysqldb</span>
+<span class="l l-Scalar l-Scalar-Plain">restart</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">always</span>
+<span class="l l-Scalar l-Scalar-Plain">nginx</span><span class="p p-Indicator">:</span>
+        <span class="l l-Scalar l-Scalar-Plain">image</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">jfrog-docker-reg2.bintray.io/jfrog/nginx-art:5.1.4</span>
+<span class="l l-Scalar l-Scalar-Plain">ports</span><span class="p p-Indicator">:</span>
+        <span class="p p-Indicator">-</span> <span class="s">&quot;80:80&quot;</span>
+        <span class="p p-Indicator">-</span> <span class="s">&quot;443:443&quot;</span>
+        <span class="p p-Indicator">-</span> <span class="s">&quot;5000-5010:5000-5010&quot;</span>
+<span class="l l-Scalar l-Scalar-Plain">environment</span><span class="p p-Indicator">:</span>
+        <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">ART_PRIMARY_BASE_URL=http://artifactory-node1:8081/artifactory</span>
+        <span class="c1">#- ART_REVERSE_PROXY_METHOD=SUBDOMAIN</span>
+        <span class="c1">#- ART_SERVER_NAME=mycluster.local</span>
+<span class="l l-Scalar l-Scalar-Plain">mysqldb</span><span class="p p-Indicator">:</span>
+        <span class="l l-Scalar l-Scalar-Plain">image</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">registry.access.redhat.com/rhscl/mysql-57-rhel7:latest</span>
+<span class="l l-Scalar l-Scalar-Plain">environment</span><span class="p p-Indicator">:</span>
+        <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">MYSQL_ROOT_PASSWORD=password</span>
+        <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">MYSQL_DATABASE=artdb</span>
+        <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">MYSQL_USER=artifactory</span>
+        <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">MYSQL_PASSWORD=password</span>
+<span class="l l-Scalar l-Scalar-Plain">volumes</span><span class="p p-Indicator">:</span>
+        <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">mysqldata:/var/lib/mysql/data</span>
+<span class="l l-Scalar l-Scalar-Plain">ports</span><span class="p p-Indicator">:</span>
+        <span class="c1">#- &quot;8145:8145&quot;</span>
+        <span class="p p-Indicator">-</span> <span class="s">&quot;3306:3306&quot;</span>
+<span class="l l-Scalar l-Scalar-Plain">restart</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">always</span>
+
+<span class="l l-Scalar l-Scalar-Plain">volumes</span><span class="p p-Indicator">:</span>
+        <span class="l l-Scalar l-Scalar-Plain">mysqldata</span><span class="p p-Indicator">:</span>
+                <span class="l l-Scalar l-Scalar-Plain">driver</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">netapp</span>
+                <span class="l l-Scalar l-Scalar-Plain">driver_opts</span><span class="p p-Indicator">:</span>
+                <span class="l l-Scalar l-Scalar-Plain">snapshotDir</span><span class="p p-Indicator">:</span> <span class="s">&quot;false&quot;</span>
+        <span class="l l-Scalar l-Scalar-Plain">artdata</span><span class="p p-Indicator">:</span>
+                <span class="l l-Scalar l-Scalar-Plain">driver</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">netapp</span>
+                <span class="l l-Scalar l-Scalar-Plain">driver_opts</span><span class="p p-Indicator">:</span>
+        <span class="l l-Scalar l-Scalar-Plain">snapshotDir</span><span class="p p-Indicator">:</span> <span class="s">&quot;false&quot;</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<ol class="arabic">
+<li><p class="first">Replace &lt;&lt;Artifactory License&gt;&gt;  with your actual Artifactory License.</p>
+<blockquote>
+<div><ol class="arabic simple" start="2">
+<li>NetAppDVP should be running on your host before you execute the compose file.</li>
+</ol>
+</div></blockquote>
+</li>
+</ol>
+<p>Save the above compose file on your linux host as docker-compose.yml and run it using following command</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="o">&gt;</span><span class="n">docker</span><span class="o">-</span><span class="n">compose</span> <span class="n">up</span>
+</pre></div>
+</div>
+<div class="last figure">
+<a class="reference internal image-reference" href="_images/jfroghome.png"><img alt="Zip" src="_images/jfroghome.png" style="width: 1516.0px; height: 814.0px;" /></a>
+</div>
+</div>
+<p>Artifactory will be up and running at</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">http</span><span class="p">:</span><span class="o">//&lt;&lt;</span><span class="n">HOST</span><span class="o">-</span><span class="n">IP</span><span class="p">:</span><span class="mi">8081</span><span class="o">&gt;&gt;</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Artifactory starts with default username=admin and password=password</p>
+</div>
+</div>
+
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2017, Akshay Patil.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'./',
+            VERSION:'2.0',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="_static/jquery.js"></script>
+      <script type="text/javascript" src="_static/underscore.js"></script>
+      <script type="text/javascript" src="_static/doctools.js"></script>
+      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

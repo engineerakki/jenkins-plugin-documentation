@@ -35,7 +35,9 @@
         <link rel="index" title="Index"
               href="genindex.html"/>
         <link rel="search" title="Search" href="search.html"/>
-    <link rel="top" title="NetApp Jenkins Plugin 2.0 documentation" href="index.html"/> 
+    <link rel="top" title="NetApp Jenkins Plugin 2.0 documentation" href="index.html"/>
+        <link rel="next" title="Support" href="support.html"/>
+        <link rel="prev" title="Welcome to NetApp-Jenkins-Plugin 2.0 documentation!" href="index.html"/> 
 
   
   <script src="_static/js/modernizr.min.js"></script>
@@ -88,21 +90,22 @@
               
             
             
-              <!-- Local TOC -->
-              <div class="local-toc"><ul>
-<li><a class="reference internal" href="#">Pre-Requisites</a></li>
-<li><a class="reference internal" href="#post-configration">Post-Configration</a></li>
-<li><a class="reference internal" href="#predefined-pipelines-and-jobs">Predefined Pipelines and Jobs</a></li>
-<li><a class="reference internal" href="#workflow">Workflow</a><ul>
-<li><a class="reference internal" href="#source-code-management-setup">1. <strong>Source Code Management Setup</strong></a></li>
-<li><a class="reference internal" href="#ci-environment-setup">2. <strong>CI Environment Setup</strong></a></li>
-<li><a class="reference internal" href="#ci-build-setup">3. <strong>CI Build Setup</strong></a></li>
-<li><a class="reference internal" href="#developer-workspaces">4. <strong>Developer Workspaces</strong></a></li>
-<li><a class="reference internal" href="#build-artifact-management-pipeline">5. <strong>Build Artifact Management Pipeline</strong></a></li>
+              <ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Pre-Requisites</a></li>
+<li class="toctree-l1"><a class="reference internal" href="#configuration">Configuration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="#workflow">Workflow</a></li>
+<li class="toctree-l1"><a class="reference internal" href="#predefined-pipelines-and-jobs">Predefined Pipelines and Jobs</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#source-code-management-setup">1. <strong>Source Code Management Setup</strong></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#ci-environment-setup">2. <strong>CI Environment Setup</strong></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#ci-build-setup">3. <strong>CI Build Setup</strong></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#developer-workspaces">4. <strong>Developer Workspaces</strong></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#build-artifact-management-pipeline">5. <strong>Build Artifact Management Pipeline</strong></a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="#pre-packaged-plugins">Pre-Packaged Plugins</a></li>
+<li class="toctree-l1"><a class="reference internal" href="support.html">Support</a></li>
 </ul>
-</div>
+
             
           
         </div>
@@ -173,18 +176,18 @@
 <li>1 running instance of <a class="reference external" href="https://mysupport.netapp.com/documentation/docweb/index.html?productID=62414&amp;language=en-US">NetApp Service Level Manager(NSLM)</a>.</li>
 <li><a class="reference external" href="https://docs.docker.com/cs-engine/1.12/">Docker Engine 1.12.5</a>. installation on atleast 2 Linux Nodes</li>
 <li><a class="reference external" href="http://netappdvp.readthedocs.io/en/latest/install/index.html">NetAppDVP 1.13</a>. installed and configured on all Linux Nodes with Docker-Engine</li>
-<li>1 running instance of <a class="reference external" href="https://www.jfrog.com/confluence/display/RTF/Installing+Artifactory">JFrog Artifactory</a>.</li>
+<li>1 running instance of <a class="reference internal" href="jfrog-install.html#jfroginstall"><span class="std std-ref">JFrog Artifactory</span></a></li>
 </ul>
 </div></blockquote>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
 <ul class="last">
-<li><p class="first">All validation in this solution has been done with a RHEL 7.3.</p>
+<li><p class="first">All validation in this solution has been done with RHEL 7.3, the source files can run on any flavour of Linux.</p>
 </li>
 <li><p class="first">Any number of nodes can be added in the swarm cluster, for demo purposes 2 node cluster considered in this validation.</p>
 </li>
 <li><dl class="first docutils">
-<dt>Please keep the following storage details handy:</dt>
+<dt>Keep the following storage details handy:</dt>
 <dd><ol class="first last arabic simple">
 <li>Management LIF IP:                  ________________________</li>
 <li>Data LIF IP:                        ________________________</li>
@@ -197,7 +200,7 @@
 </dl>
 </li>
 <li><dl class="first docutils">
-<dt>This solution uses following ports, please make sure these are open within your firewall:</dt>
+<dt>The tools in this framework use following ports,  make sure following are open within your firewall:</dt>
 <dd><table border="1" class="first last docutils">
 <colgroup>
 <col width="33%" />
@@ -243,8 +246,8 @@
 </ul>
 </div>
 </div>
-<div class="section" id="post-configration">
-<span id="post"></span><h1>Post-Configration<a class="headerlink" href="#post-configration" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="configuration">
+<span id="post"></span><h1>Configuration<a class="headerlink" href="#configuration" title="Permalink to this headline">¶</a></h1>
 <blockquote>
 <div><ol class="arabic">
 <li><p class="first"><strong>Adding ONTAP Storage system in NetApp Service Level Manager</strong></p>
@@ -260,7 +263,7 @@
 </li>
 <li><p class="first"><strong>Building a docker image for your environment</strong></p>
 <blockquote>
-<div><p>2.1) Fork the NetApp Jenkins Plugin repo</p>
+<div><p>2.1) Get the source code from <a class="reference external" href="https://github.com/NetApp/Jenkins-Plugin">NetApp Jenkins Framework Github Repo</a>.</p>
 <p>2.2) Edit the /Jenkins_Master/ontap-nas.json file with appropiate values.</p>
 <div class="figure">
 <a class="reference internal image-reference" href="_images/ontapnas.png"><img alt="Sample ontap-nas.json" src="_images/ontapnas.png" style="width: 426.0px; height: 256.0px;" /></a>
@@ -288,7 +291,7 @@
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
 <ul class="simple">
-<li>If there are multiple eth ports configured on the host then “–advertise-addr” &lt;IP-Address&gt; argument needs to be provided with swarm initialization.</li>
+<li>If there are multiple ethernet ports(eth0…ethn) configured on the host then “–advertise-addr” &lt;IP-Address of Swarm Host&gt; argument needs to be provided with swarm initialization.</li>
 </ul>
 <div class="figure">
 <a class="reference internal image-reference" href="_images/swarminit2.png"><img alt="Initializing Docker Swarm Cluster" src="_images/swarminit2.png" style="width: 1242.0px; height: 191.0px;" /></a>
@@ -458,17 +461,17 @@
 <li><dl class="first docutils">
 <dt><strong>Configure Maven Home in Jenkins</strong></dt>
 <dd><p class="first">9.1) In the Jenkins Slave Image we already have installed maven at the default location i.e  /usr/share/maven</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">As part of this validation, a Maven sample project is used, If the production environment has any other type of build, that needs to be configured here.</p>
+</div>
 <p>9.2) Navigate to Manage Jenkins &gt; Global Tool Configuration (<a class="reference external" href="http://xx.xx.xx.xx:1024/configureTools/">http://xx.xx.xx.xx:1024/configureTools/</a>) , where xx.xx.xx.xx is Jenkins URL</p>
 <p>9.3) Scroll down till the Maven Section</p>
 <p>9.4) Click Add Maven</p>
 <p>9.5) Enter Maven Installation name (eg: Maven)</p>
 <p>9.6) Enter Maven Path as /usr/share/maven , as shown in below screenshot</p>
-<div class="figure">
+<div class="last figure">
 <a class="reference internal image-reference" href="_images/mavenconf.png"><img alt="Configuring Artifactory" src="_images/mavenconf.png" style="width: 1595.0px; height: 931.0px;" /></a>
-</div>
-<div class="last admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">As part of this validation, a Maven sample project is used, If the production environment has any other type of build, that needs to be configured here.</p>
 </div>
 </dd>
 </dl>
@@ -486,11 +489,68 @@
 </ol>
 </div></blockquote>
 </div>
+<div class="section" id="workflow">
+<span id="id1"></span><h1>Workflow<a class="headerlink" href="#workflow" title="Permalink to this headline">¶</a></h1>
+<p>The CI workflow is defined as following stages in this solution:</p>
+<blockquote>
+<div><div class="figure">
+<a class="reference internal image-reference" href="_images/workflow.png"><img alt="Workflow" src="_images/workflow.png" style="width: 1063.0px; height: 467.0px;" /></a>
+</div>
+<ol class="arabic simple">
+<li>Source Code Management</li>
+<li><dl class="first docutils">
+<dt>Continuous Integration</dt>
+<dd><ul class="first last">
+<li>Continous Integretion Environment Setup</li>
+<li>Continuous Integration Build Setup</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li>Developer Workspace Creation</li>
+<li>Build Artifact Management</li>
+</ol>
+</div></blockquote>
+</div>
 <div class="section" id="predefined-pipelines-and-jobs">
 <h1>Predefined Pipelines and Jobs<a class="headerlink" href="#predefined-pipelines-and-jobs" title="Permalink to this headline">¶</a></h1>
 <blockquote>
-<div><ol class="arabic simple">
-<li>This solution has following 4  prefdefined pipelines and PreConfigured Jobs:</li>
+<div><p>As an example, following nomenclature for the Jenkins job names is used :</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="55%" />
+<col width="45%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Job Task</th>
+<th class="head">Default Name used:</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>SCM Setup</td>
+<td>JFrog_OSS_Repo</td>
+</tr>
+<tr class="row-odd"><td>CI Environment Setup</td>
+<td>JFrog_2017_1</td>
+</tr>
+<tr class="row-even"><td>CI Build</td>
+<td>JFrog_CI_Build</td>
+</tr>
+<tr class="row-odd"><td>Developer Workspace Name</td>
+<td>Dev1_JFrog_2017_1</td>
+</tr>
+<tr class="row-even"><td>Build Artifact Container Name</td>
+<td>Build_Artifacts_JFrog_2017</td>
+</tr>
+</tbody>
+</table>
+<p>For purpose of explaining pipelines in this documentation, sample opensource scripts from JFrog are used to demonstrate a CI workflow.</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">github</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">JFrogDev</span><span class="o">/</span><span class="n">project</span><span class="o">-</span><span class="n">examples</span>
+</pre></div>
+</div>
+<p>This framework has following prefdefined pipelines and preconfigured jobs:</p>
+<ol class="arabic simple">
+<li>Predefined Pipelines</li>
 </ol>
 <table border="1" class="docutils">
 <colgroup>
@@ -632,22 +692,6 @@ display and alert</li>
 </tr>
 </tbody>
 </table>
-</div></blockquote>
-</div>
-<div class="section" id="workflow">
-<span id="id1"></span><h1>Workflow<a class="headerlink" href="#workflow" title="Permalink to this headline">¶</a></h1>
-<p>The CI workflow is defined as following stages in this solution:</p>
-<blockquote>
-<div><div class="figure">
-<a class="reference internal image-reference" href="_images/workflow.png"><img alt="Workflow" src="_images/workflow.png" style="width: 899.0px; height: 396.0px;" /></a>
-</div>
-<ul class="simple">
-<li>Source Code Management Setup</li>
-<li>Continuous Integration Environment Setup</li>
-<li>Continuous Integration Build Setup</li>
-<li>Developer Workspace Creation</li>
-<li>Build Artifact Management</li>
-</ul>
 </div></blockquote>
 <div class="section" id="source-code-management-setup">
 <span id="scm"></span><h2>1. <strong>Source Code Management Setup</strong><a class="headerlink" href="#source-code-management-setup" title="Permalink to this headline">¶</a></h2>
@@ -834,7 +878,7 @@ This ensures all the artifacts stay on a NetApp workspace.</p>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
 <ul class="last simple">
-<li>Please fill in these values as per your environment/code structure</li>
+<li>Fill in these values as per your environment/code structure</li>
 <li>The custom workspace field should be in the format “/workspace/
 &lt;&lt;Your-CI-Environment-Job-Name&gt;&gt;</li>
 </ul>
@@ -999,9 +1043,10 @@ Select trigger only if build is stable.</li>
 <div class="section" id="build-artifact-management-pipeline">
 <span id="bam"></span><h2>5. <strong>Build Artifact Management Pipeline</strong><a class="headerlink" href="#build-artifact-management-pipeline" title="Permalink to this headline">¶</a></h2>
 <dl class="docutils">
-<dt>This pipeline will  i) Create a Build Artifact Container</dt>
+<dt>This pipeline will:</dt>
 <dd><blockquote class="first">
-<div><ol class="lowerroman simple" start="2">
+<div><ol class="lowerroman simple">
+<li>Create a Build Artifact Container</li>
 <li>Create Zip of all the volume contents</li>
 <li>Create Docker Image of running CI Environment</li>
 </ol>
@@ -1048,12 +1093,84 @@ Select trigger only if build is stable.</li>
 </table>
 <p>5.3) Build the Pipeline</p>
 <p>5.4) If the build is successful, a docker image will be pushed to the docker-dev repo in Artifactory.</p>
-<div class="last figure">
+<div class="figure">
 <a class="reference internal image-reference" href="_images/dockerimage.png"><img alt="docker image" src="_images/dockerimage.png" style="width: 1680.0px; height: 946.0px;" /></a>
+</div>
+<p>5.5) To restore your Build Environment using the docker image, login to any linux host and use the following command</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">docker</span> <span class="n">run</span>  <span class="o">-</span><span class="n">t</span> <span class="o">-</span><span class="n">d</span> <span class="o">-</span><span class="n">e</span> <span class="n">masterip</span><span class="o">=</span><span class="n">http</span><span class="p">:</span><span class="o">//&lt;&lt;</span><span class="n">jenkins</span><span class="o">-</span><span class="n">master</span><span class="o">-</span><span class="n">ip</span><span class="o">&gt;&gt;</span><span class="p">:</span><span class="mi">1024</span> <span class="o">-</span><span class="n">e</span> <span class="n">slavename</span><span class="o">=</span><span class="n">JFrog_2017_1_copy</span> <span class="o">--</span><span class="n">name</span> <span class="n">JFrog_2017_1_copy</span> <span class="o">&lt;&lt;</span><span class="n">Artifactory</span><span class="o">-</span><span class="n">Server</span><span class="o">-</span><span class="n">URL</span><span class="p">:</span><span class="n">Port</span><span class="o">&gt;&gt;/</span><span class="n">image1</span><span class="p">:</span><span class="n">version1</span>
+</pre></div>
+</div>
+<p>5.6) All the build data is stored as a timestamped zip file in Artifactory in the same docker repo. This zip can be downloaded/curl/wget to your backed up container.</p>
+<div class="last figure">
+<a class="reference internal image-reference" href="_images/zip.png"><img alt="Zip" src="_images/zip.png" style="width: 978.0px; height: 583.0px;" /></a>
 </div>
 </dd>
 </dl>
 </div>
+</div>
+<div class="section" id="pre-packaged-plugins">
+<span id="plugins"></span><h1>Pre-Packaged Plugins<a class="headerlink" href="#pre-packaged-plugins" title="Permalink to this headline">¶</a></h1>
+<ul>
+<li><p class="first">The NetApp Jenkins Master Docker Image is pre-packaged with following Jenkins Plugins:</p>
+<blockquote>
+<div><ol class="arabic simple">
+<li><dl class="first docutils">
+<dt><a class="reference external" href="https://wiki.jenkins-ci.org/display/JENKINS/Swarm+Plugin">Swarm</a>. <span class="classifier-delimiter">:</span> <span class="classifier">2.1</span></dt>
+<dd>This plugin enables slaves to auto-discover nearby Jenkins master and join it automatically</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt><a class="reference external" href="https://wiki.jenkins-ci.org/display/JENKINS/Pipeline+Plugin">Pipeline</a>. <span class="classifier-delimiter">:</span> <span class="classifier">2.5</span></dt>
+<dd>Pipeline plugin(workflow-aggregator) is a suite of plugins used create Pipeline Jobs in Jenkins</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt><a class="reference external" href="https://wiki.jenkins-ci.org/display/JENKINS/Git+Plugin">Git</a>. <span class="classifier-delimiter">:</span> <span class="classifier">2.2.0</span></dt>
+<dd>Git plugin is used to conduct GIT operations with Jenkins</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt><a class="reference external" href="https://wiki.jenkins-ci.org/display/JENKINS/Extended+Choice+Parameter+plugin">Extended Choice Parameter Plugin</a>. :0.76</dt>
+<dd>This plugin provides an option of having DropDown input sections in pipelines</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt><a class="reference external" href="https://wiki.jenkins-ci.org/display/JENKINS/Artifactory+Plugin">Artifactory</a>. :2.12.1</dt>
+<dd>Artifactory  plugin resolves the build artifacts from local instance of JFrog Artifactory</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt><a class="reference external" href="https://wiki.jenkins-ci.org/display/JENKINS/Multijob+Plugin">MultiJob Plugin</a>. :1.24</dt>
+<dd>MultiJob plugin lets you have multiple types of job configurations in a single job</dd>
+</dl>
+</li>
+</ol>
+</div></blockquote>
+</li>
+<li><dl class="first docutils">
+<dt>To Bundle more plugins in the Jenkins-Master Docker image :-</dt>
+<dd><ol class="first last arabic">
+<li><p class="first">Open the Dockerfile in any text editor</p>
+</li>
+<li><p class="first">Find the line with plugin install script</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">RUN</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="nb">bin</span><span class="o">/</span><span class="n">install</span><span class="o">-</span><span class="n">plugins</span><span class="o">.</span><span class="n">sh</span> <span class="n">workflow</span><span class="o">-</span><span class="n">aggregator</span><span class="p">:</span><span class="mf">2.5</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first">Append your plugin-id:plugin-version to the the above line, e.g if you wish to package the <em>blueocean</em> plugin in Jenkins Master</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">RUN</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="nb">bin</span><span class="o">/</span><span class="n">install</span><span class="o">-</span><span class="n">plugins</span><span class="o">.</span><span class="n">sh</span> <span class="n">workflow</span><span class="o">-</span><span class="n">aggregator</span><span class="p">:</span><span class="mf">2.5</span> <span class="n">blueocean</span><span class="p">:</span><span class="mf">1.0</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first">Save the Dockerfile</p>
+</li>
+<li><p class="first">Build a new Docker image.</p>
+</li>
+</ol>
+</dd>
+</dl>
+</li>
+</ul>
 </div>
 
 
@@ -1063,6 +1180,15 @@ Select trigger only if build is stable.</li>
            </div>
           </div>
           <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="support.html" class="btn btn-neutral float-right" title="Support" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="index.html" class="btn btn-neutral" title="Welcome to NetApp-Jenkins-Plugin 2.0 documentation!" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
   
 
   <hr/>

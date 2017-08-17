@@ -16,11 +16,12 @@ Pre-Requisites
 	* 1 running instance of `NetApp Service Level Manager(NSLM) <https://mysupport.netapp.com/documentation/docweb/index.html?productID=62414&language=en-US>`_.
 	* `Docker Engine 1.12.5 <https://docs.docker.com/cs-engine/1.12/>`_. installation on atleast 2 Linux Nodes
 	* `NetAppDVP 1.13 <http://netappdvp.readthedocs.io/en/latest/install/index.html>`_. installed and configured on all Linux Nodes with Docker-Engine
-	* 1 running instance of `JFrog Artifactory <https://www.jfrog.com/confluence/display/RTF/Installing+Artifactory>`_.
+	* 1 running instance of :ref:`jfroginstall`
+	
 
-.. note:: * All validation in this solution has been done with a RHEL 7.3.
+.. note:: * All validation in this solution has been done with RHEL 7.3, the source files can run on any flavour of Linux.
 		  * Any number of nodes can be added in the swarm cluster, for demo purposes 2 node cluster considered in this validation.
-		  * Please keep the following storage details handy:
+		  * Keep the following storage details handy:
 				#. Management LIF IP:                  ________________________
 				#. Data LIF IP:                        ________________________
 				#. Storage Virtual Machine(SVM) name:  ________________________
@@ -28,7 +29,7 @@ Pre-Requisites
 				#. SVM Password:                       ________________________
 				#. Aggregate Name:                     ________________________
 
-		  * This solution uses following ports, please make sure these are open within your firewall:
+		  * The tools in this framework use following ports,  make sure following are open within your firewall:
 			==================   ============   ============ 
 			Protocol             Port			Used By
 			==================   ============   ============
@@ -42,7 +43,7 @@ Pre-Requisites
 
 .. _post:
 
-Post-Configration
+Configuration
 =================================================
 	
     1.  **Adding ONTAP Storage system in NetApp Service Level Manager**
@@ -62,7 +63,7 @@ Post-Configration
 
     2.  **Building a docker image for your environment**
 	
-		2.1) Fork the NetApp Jenkins Plugin repo 
+		2.1) Get the source code from `NetApp Jenkins Framework Github Repo <https://github.com/NetApp/Jenkins-Plugin>`_. 
 		
 		
 		2.2) Edit the /Jenkins_Master/ontap-nas.json file with appropiate values.
@@ -91,7 +92,7 @@ Post-Configration
 		    :alt: Initializing Docker Swarm Cluster
 		
 		.. note:: 
-			* If there are multiple eth ports configured on the host then “--advertise-addr” <IP-Address> argument needs to be provided with swarm initialization.
+			* If there are multiple ethernet ports(eth0...ethn) configured on the host then “--advertise-addr” <IP-Address of Swarm Host> argument needs to be provided with swarm initialization.
 	
 			.. figure:: images/swarminit2.png
 				:scale: 100 %
@@ -224,6 +225,8 @@ Post-Configration
     9.	**Configure Maven Home in Jenkins**
 		9.1) In the Jenkins Slave Image we already have installed maven at the default location i.e  /usr/share/maven 
 		
+		.. note:: As part of this validation, a Maven sample project is used, If the production environment has any other type of build, that needs to be configured here.
+		
 		9.2) Navigate to Manage Jenkins > Global Tool Configuration (http://xx.xx.xx.xx:1024/configureTools/) , where xx.xx.xx.xx is Jenkins URL
 		
 		9.3) Scroll down till the Maven Section
@@ -238,7 +241,6 @@ Post-Configration
 			:scale: 100 %
 			:alt: Configuring Artifactory
 			
-		.. note:: As part of this validation, a Maven sample project is used, If the production environment has any other type of build, that needs to be configured here.
 		
     10. **Approving the NetApp Groovy Pipelines**
 		10.1) In Jenkins UI navigate to Manage Jenkins>In-Process Script Approval (http://xx.xx.xx.xx:1024/configure) , where xx.xx.xx.xx is Jenkins URL
@@ -250,15 +252,53 @@ Post-Configration
 			:scale: 100 %
 			:alt: Approve Scripts
 			
-			
+	
+
+	
+.. _workflow:	
+
+Workflow	
+=================================================
+The CI workflow is defined as following stages in this solution:
+
+	.. figure:: images/workflow.png
+			:scale: 100 %
+			:alt: Workflow
+
+	1) Source Code Management
+	2) Continuous Integration 
+		* Continous Integretion Environment Setup
+		* Continuous Integration Build Setup
+	3) Developer Workspace Creation
+	4) Build Artifact Management
+
 			
 Predefined Pipelines and Jobs
 =================================================
-	1. This solution has following 4  prefdefined pipelines and PreConfigured Jobs:
-	
 	.. |br| raw:: html
 
 	   <br />
+	   
+	   
+	As an example, following nomenclature for the Jenkins job names is used :
+	
+	=========================================   ================================= 
+	Job Task                                     Default Name used:
+	=========================================   =================================
+	SCM Setup                                   JFrog_OSS_Repo
+	CI Environment Setup                        JFrog_2017_1  
+	CI Build                                    JFrog_CI_Build
+	Developer Workspace Name                    Dev1_JFrog_2017_1
+	Build Artifact Container Name               Build_Artifacts_JFrog_2017	
+	=========================================   =================================   
+	
+	For purpose of explaining pipelines in this documentation, sample opensource scripts from JFrog are used to demonstrate a CI workflow. ::
+	
+		https://github.com/JFrogDev/project-examples
+		
+	This framework has following prefdefined pipelines and preconfigured jobs:
+	
+	1. Predefined Pipelines
 	
 	+---------------------------+---------------------------------------------------------------------+----------------------------------------------+
 	| Pipelines                 | Tasks                                                               | Jobs Included in the Pipeline                |
@@ -375,23 +415,7 @@ Predefined Pipelines and Jobs
 	+---------------------------+---------------------------------------------------------------------+----------------------------------------------+
 
 	
-	
-.. _workflow:	
 
-Workflow	
-=================================================
-The CI workflow is defined as following stages in this solution:
-
-	.. figure:: images/workflow.png
-			:scale: 100 %
-			:alt: Workflow
-
-	* Source Code Management Setup
-	* Continuous Integration Environment Setup
-	* Continuous Integration Build Setup
-	* Developer Workspace Creation
-	* Build Artifact Management
-	
 
 .. _scm:
 	
@@ -588,7 +612,7 @@ This pipeline will build a Continuous Integration Environment where a CI Build w
 			:alt: Add SCM URL for CI Build
 		
 		.. note::
-			* Please fill in these values as per your environment/code structure
+			* Fill in these values as per your environment/code structure
 			* The custom workspace field should be in the format “/workspace/
 			  <<Your-CI-Environment-Job-Name>>
 			  
@@ -751,12 +775,11 @@ This Pipeline Job will Create User Workspaces for Private Builds on NetApp FlexC
 			
 5. **Build Artifact Management Pipeline**
 -------------------------------------------------
-This pipeline will  i) Create a Build Artifact Container
-                    ii) Create Zip of all the volume contents 
-                    iii) Create Docker Image of running CI Environment
-	
-	
-	
+This pipeline will:
+					i) Create a Build Artifact Container
+					ii) Create Zip of all the volume contents 
+					iii) Create Docker Image of running CI Environment
+		
 	5.1) Select Build Artifact Management Pipeline and click build now
 	
 	.. figure:: images/bampipeline.png
@@ -784,5 +807,62 @@ This pipeline will  i) Create a Build Artifact Container
 	.. figure:: images/dockerimage.png
 			:scale: 100 %
 			:alt: docker image
+			
+			
+			
+	5.5) To restore your Build Environment using the docker image, login to any linux host and use the following command ::
+			
+			docker run  -t -d -e masterip=http://<<jenkins-master-ip>>:1024 -e slavename=JFrog_2017_1_copy --name JFrog_2017_1_copy <<Artifactory-Server-URL:Port>>/image1:version1
+	
+	
+	
+	5.6) All the build data is stored as a timestamped zip file in Artifactory in the same docker repo. This zip can be downloaded/curl/wget to your backed up container.
+	
+	.. figure:: images/zip.png
+			:scale: 100 %
+			:alt: Zip
 	
 			   	
+.. _plugins:	
+
+Pre-Packaged Plugins	
+=================================================
+* The NetApp Jenkins Master Docker Image is pre-packaged with following Jenkins Plugins:
+
+	1) `Swarm <https://wiki.jenkins-ci.org/display/JENKINS/Swarm+Plugin>`_. : 2.1 
+		This plugin enables slaves to auto-discover nearby Jenkins master and join it automatically	
+
+	2) `Pipeline <https://wiki.jenkins-ci.org/display/JENKINS/Pipeline+Plugin>`_. : 2.5
+		Pipeline plugin(workflow-aggregator) is a suite of plugins used create Pipeline Jobs in Jenkins
+		
+	3) `Git <https://wiki.jenkins-ci.org/display/JENKINS/Git+Plugin>`_. : 2.2.0
+		Git plugin is used to conduct GIT operations with Jenkins
+		
+	4) `Extended Choice Parameter Plugin <https://wiki.jenkins-ci.org/display/JENKINS/Extended+Choice+Parameter+plugin>`_. :0.76
+		This plugin provides an option of having DropDown input sections in pipelines
+		
+	5) `Artifactory <https://wiki.jenkins-ci.org/display/JENKINS/Artifactory+Plugin>`_. :2.12.1
+		Artifactory  plugin resolves the build artifacts from local instance of JFrog Artifactory
+
+	6) `MultiJob Plugin <https://wiki.jenkins-ci.org/display/JENKINS/Multijob+Plugin>`_. :1.24
+		MultiJob plugin lets you have multiple types of job configurations in a single job
+		
+*  To Bundle more plugins in the Jenkins-Master Docker image :-
+	1) Open the Dockerfile in any text editor
+	
+	2) Find the line with plugin install script ::
+
+		RUN /usr/local/bin/install-plugins.sh workflow-aggregator:2.5 
+		
+	3) Append your plugin-id:plugin-version to the the above line, e.g if you wish to package the *blueocean* plugin in Jenkins Master ::
+	
+		RUN /usr/local/bin/install-plugins.sh workflow-aggregator:2.5 blueocean:1.0
+		
+	4) Save the Dockerfile
+	
+	5) Build a new Docker image.
+	
+	
+	
+	
+	

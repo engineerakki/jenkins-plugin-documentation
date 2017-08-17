@@ -2,9 +2,15 @@
    sphinx-quickstart on Fri Jul 21 10:21:20 2017.
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
+   
 
-Welcome to NetApp Jenkins Plugin's documentation!
-=================================================
+
+   
+  
+    
+
+Welcome to NetApp-Jenkins-Plugin 2.0 documentation!
+=======================================================
 
 The NetApp-Jenkins integration is an end-to-end framework from creating code repository until zipping the successful builds in the artifactory location. All these processes run as Docker-containers and use persistent NetApp storage with NetApp Docker volume plugin (nDVP).
 
@@ -27,31 +33,20 @@ The advantage of running CI process on NetApp for Business or Asset owner are â€
 		
 		 b.	Data Compaction and De-duplication for the source code repositories and the software builds during the CI process on NetApp provides a high degree of storage space efficiency. Data compression of build artifacts in the binary repository lso provides space savings.
 
-
-
-	
+		 
 Contents
-==================
-
+=======================================================		 
 .. toctree::
    :maxdepth: 2
 
-* :ref:`pre`
-* :ref:`post`
-* :ref:`workflow`
-	* :ref:`scm`
-	* :ref:`cienv`
-	* :ref:`cibuild`
-	* :ref:`devworkspace`
-	* :ref:`bam`
-* :ref:`support`
+   prerequisites
+   support
+	
+   
 
 	
-FAQ
----------
-.. toctree::
-   :maxdepth: 4
-   :caption: Contents:
+
+
    
 
 
